@@ -1,0 +1,71 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.17'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'com.evg.order'
+version = '0.0.1-SNAPSHOT'
+
+ext{
+    set('springCloudVersion', '4.0.1')
+}
+
+java {
+    sourceCompatibility = '17'
+}
+
+bootJar {
+    archiveFileName = project.name +  '.jar'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:2022.0.1"
+    }
+}
+
+dependencies {
+    //spring
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.6.1'
+
+    //cloud
+//    implementation "org.springframework.cloud:spring-cloud-starter-sleuth:${springCloudVersion}"
+    implementation "org.springframework.cloud:spring-cloud-starter-openfeign:${springCloudVersion}"
+    implementation 'io.github.openfeign:feign-okhttp:13.0'
+//    implementation "org.springframework.cloud:spring-cloud-starter-consul-discovery:${springCloudVersion}"
+//    implementation "org.springframework.cloud:spring-cloud-sleuth-zipkin:${springCloudVersion}"
+
+    //logback
+    implementation group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '4.11'
+    implementation ("org.codehaus.groovy:groovy-all:2.4.15")
+
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    //db
+    implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.6.0'
+    implementation group: 'org.hibernate', name: 'hibernate-envers', version: '5.6.1.Final'
+    implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.6.1.Final'
+    implementation group: 'org.hibernate', name: 'hibernate-spatial', version: '5.6.1.Final'
+
+    //lombok
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    //auth
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.6.1'
+
+    //test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
