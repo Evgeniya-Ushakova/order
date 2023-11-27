@@ -2,7 +2,7 @@ package com.evg.order.utils;
 
 import org.slf4j.MDC;
 
-import static com.evg.otus.utils.Utils.MDC_REQUEST_ID;
+import static com.evg.order.utils.Utils.MDC_REQUEST_ID;
 
 public class MDCInit implements AutoCloseable{
 

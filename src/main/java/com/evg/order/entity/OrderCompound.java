@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(schema = "evg", name = "ORDER_COMPOUND")
+@Table(schema = "order", name = "ORDER_COMPOUND")
 public class OrderCompound {
 
     @EmbeddedId

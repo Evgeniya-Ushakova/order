@@ -7,11 +7,13 @@ import com.evg.order.dto.user.UserResponse;
 import com.evg.order.entity.Order;
 import com.evg.order.entity.OrderCompound;
 import com.evg.order.entity.OrderProductKey;
+import com.evg.order.enums.BpmnProcess;
 import com.evg.order.enums.ErrorMessageCode;
 import com.evg.order.exception.BadRequestException;
 import com.evg.order.repository.OrderCompoundsRepository;
 import com.evg.order.repository.OrderRepository;
 import com.evg.order.repository.ProductRepository;
+import com.evg.order.service.CamundaService;
 import com.evg.order.service.OrderService;
 import com.evg.order.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,17 +22,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import static com.evg.order.enums.BpmnVars.ORDER_ID;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j(topic = "ORDER_SERVICE")
 public class OrderServiceImpl implements OrderService {
 
-
     private final OrderCompoundsRepository orderCompoundsRepository;
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
+    private final CamundaService camundaService;
     private final UserService userService;
 
     @Override
@@ -40,10 +45,6 @@ public class OrderServiceImpl implements OrderService {
             throw new BadRequestException(ErrorMessageCode.BAD_REQUEST.getCode(),
                     String.format("Order %s already exists for user %s", idempotencyKey, request.getUserId()));
         }
-
-//        User user = userRepository.findByIdOrElseThrow(request.getUserId());
-//        user.setOrderCount(user.getOrderCount() + 1);
-//        user = userRepository.save(user);
 
         Order order = new Order();
         order.setOrderKey(idempotencyKey);
@@ -55,9 +56,10 @@ public class OrderServiceImpl implements OrderService {
         order.setProducts(orderCompounds);
         orderRepository.save(order);
 
+        //обновим количество заказов у юзера - убедимся, что он существует
         UserResponse userResponse = userService.increaseOrderCount(request.getUserId());
 
-        //increase user orderCount
+        camundaService.startProcess(BpmnProcess.CREATE_ORDER, idempotencyKey, Map.of(ORDER_ID.getName(), order.getId()));
 
         LOGGER.info("Count of orders: {}, userId: {}", userResponse.getOrderCount(), userResponse.getId());
         return CreateOrderResponse.builder()

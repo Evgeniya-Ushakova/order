@@ -1,6 +1,6 @@
 package com.evg.order.dto.order.response;
 
-import com.evg.otus.dto.BaseResponse;
+import com.evg.order.dto.BaseResponse;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;

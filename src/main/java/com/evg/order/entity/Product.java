@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(schema = "evg", name = "product")
+@Table(schema = "order", name = "product")
 @EqualsAndHashCode(callSuper = true)
 public class Product extends EntityBase<Long> {
 

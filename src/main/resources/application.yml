@@ -1,5 +1,5 @@
 server:
-  port: 8000
+  port: 8002
 
 spring:
   #  security:
@@ -40,13 +40,12 @@ spring:
         format_sql: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: ${DATASOURCE_URL}
-    #    url: jdbc:postgresql://@evgpostgresdb-postgresql:5432/evg?user=evguser&password=evgpwd
-    username: ${DATABASE_USER}
-    #    username: evguser
-    #    url: jdbc:postgresql://127.0.0.1:5432/evg?user=evguser&password=evgpwd
-    password: ${DATABASE_PASSWORD}
-    #    password: evgpwd
+#    url: ${DATASOURCE_URL}
+    url: jdbc:postgresql://127.0.0.1:5432/evg?user=evguser&password=evgpwd
+#    username: ${DATABASE_USER}
+    username: evguser
+#    password: ${DATABASE_PASSWORD}
+    password: evgpwd
     driverClassName: org.postgresql.Driver
     #    continue-on-error: : true
     hikari:
@@ -60,6 +59,23 @@ spring:
   transaction:
     default-timeout: 200
 
+camunda:
+  bpm:
+    default-number-of-retries: 1
+    webapp:
+      index-redirect-enabled: true
+    filter:
+      create: all
+    admin-user:
+      id: demo
+      password: demo
+    database:
+      type: postgres
+      schema-update: true
+#      table-prefix: camunda
+#      schema-name: camunda
+
 user:
   server: localhost:8000
+
 

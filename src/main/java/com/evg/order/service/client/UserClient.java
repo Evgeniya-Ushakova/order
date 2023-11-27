@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.*;
 public interface UserClient {
 
     @PutMapping("/{userId}")
-    UserResponse increaseUserOrderCount(@PathVariable Long userId,
+    UserResponse increaseUserOrderCount(@PathVariable(value = "userId") Long userId,
                                         @RequestBody UserUpdateRequest request,
                                         @RequestHeader("x-auth-token") String token);
 
     @GetMapping("/{userId}")
-    UserResponse getUser(@PathVariable Long userId, @RequestHeader("x-auth-token") String token);
+    UserResponse getUser(@PathVariable(value = "userId") Long userId, @RequestHeader("x-auth-token") String token);
 
 }
