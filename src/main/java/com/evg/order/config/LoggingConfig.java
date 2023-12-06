@@ -49,8 +49,19 @@ public class LoggingConfig {
     @Bean
     public FilterRegistrationBean loggingFilterRegistration(CommonsRequestLoggingFilter loggerRequestFilter) {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean(loggerRequestFilter);
-        registrationBean.addUrlPatterns("/auth/*");
+        registrationBean.addUrlPatterns("/order/*");
         return registrationBean;
+    }
+
+    @Bean
+    public FilterRegistrationBean processEngineAuthenticationFilter() {
+        FilterRegistrationBean<CamundaProcessEngineFilter>  registration = new FilterRegistrationBean();
+        registration.setName("camunda-auth");
+        registration.setFilter(new CamundaProcessEngineFilter());
+        registration.addInitParameter("authentication-provider",
+                "org.camunda.bpm.engine.rest.security.auth.impl.HttpBasicAuthenticationProvider");
+        registration.addUrlPatterns("/engine-rest/*", "/engine/*");
+        return registration;
     }
 
     @Bean

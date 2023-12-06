@@ -69,13 +69,19 @@ camunda:
     admin-user:
       id: demo
       password: demo
-    database:
-      type: postgres
-      schema-update: true
-#      table-prefix: camunda
+#    database:
+#      type: postgres
+#      schema-update: false
+#      table-prefix: camunda.
 #      schema-name: camunda
 
 user:
   server: localhost:8000
+billing:
+  server: localhost:8001
+delivery:
+  server: localhost:8003
+storehouse:
+  server: localhost:8004
 
 

@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(schema = "order", name = "ORDER_COMPOUND")
+@Table(schema = "s_order", name = "ORDER_COMPOUND")
 public class OrderCompound {
 
     @EmbeddedId
@@ -16,11 +16,6 @@ public class OrderCompound {
     @MapsId("orderId")
     @JoinColumn(name = "ORDER_ID")
     private Order order;
-
-    @ManyToOne
-    @MapsId("productId")
-    @JoinColumn(name = "PRODUCT_ID")
-    private Product product;
 
     @Column(name = "COUNT", columnDefinition = "numeric")
     private Long count;

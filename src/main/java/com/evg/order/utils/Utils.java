@@ -14,6 +14,12 @@ public class Utils {
         return MDC.get(MDC_REQUEST_ID);
     }
 
+    public static void clearRequestId() {MDC.remove(MDC_REQUEST_ID);}
+
+    public static void putMdcRequestId(String requestId) {
+        MDC.put(MDC_REQUEST_ID, requestId);
+    }
+
     public static String getRequestBodyAsString(ContentCachingRequestWrapper requestWrapper) {
         return new String(requestWrapper.getContentAsByteArray(), StandardCharsets.UTF_8);
     }
