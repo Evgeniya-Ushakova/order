@@ -36,7 +36,7 @@ public class OrderController {
     public CreateOrderResponse create(@RequestHeader(IDEMPOTENCY_KEY_HEADER) String idempotencyKey,
                                       @RequestBody @Valid @NonNull CreateOrderRequest request,
                                       @RequestHeader(value = "x-auth-token", required = false) String authToken) {
-        //  authService.checkAuth(authToken, request.getUserId());
+        authService.checkAuth(authToken, request.getUserId());
         try {
             CreateOrderResponse createOrderResponse = orderService.create(request, idempotencyKey);
             billingService.updateBillingAccount(request.getUserId(), request.getTotalPrice(), false);

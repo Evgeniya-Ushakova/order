@@ -83,5 +83,7 @@ delivery:
   server: localhost:8003
 storehouse:
   server: localhost:8004
+auth:
+  server: localhost:8006
 
 
