@@ -16,11 +16,14 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class CreateOrderResponse extends BaseResponse {
 
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String orderKey;
     private Long orderId;
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<ProductDto> products;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private BigDecimal totalPrice;
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private OrderStatus status;
 
 }

@@ -10,6 +10,8 @@ import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,6 +23,7 @@ public class OrderPackageDelegator implements JavaDelegate {
     private final StorehouseService storehouseService;
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void execute(DelegateExecution execution) throws Exception {
         try {
             ReservationResponse reservationResponse = storehouseService.reserveProduct(execution.getBusinessKey());

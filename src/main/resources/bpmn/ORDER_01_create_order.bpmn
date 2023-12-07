@@ -19,7 +19,7 @@
       <bpmn:incoming>Flow_0dejajf</bpmn:incoming>
       <bpmn:outgoing>Flow_0o6z53y</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="orderDelivery" name="Отправить запрос на доставку" camunda:asyncBefore="true" camunda:delegateExpression="${orderDeliveryDelegator}">
+    <bpmn:serviceTask id="orderDelivery" name="Отправить запрос на доставку" camunda:asyncBefore="true" camunda:asyncAfter="true" camunda:delegateExpression="${orderDeliveryDelegator}">
       <bpmn:incoming>Flow_17n73t8</bpmn:incoming>
       <bpmn:outgoing>Flow_0dejajf</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -181,7 +181,7 @@
 </bpmn:text>
       </bpmn:textAnnotation>
     </bpmn:subProcess>
-    <bpmn:boundaryEvent id="Event_1ix3107" attachedToRef="orderPackage">
+    <bpmn:boundaryEvent id="Event_1ix3107" camunda:asyncAfter="true" attachedToRef="orderPackage">
       <bpmn:outgoing>Flow_1dybq6l</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_0gd4rfs" />
     </bpmn:boundaryEvent>
